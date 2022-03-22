@@ -132,18 +132,18 @@
                         },
 
                         {
-                            field: 'ID',
+                            field: '',
                             title: '',
                             sortable: false,
                             overflow: 'visible',
-                            textAlign: 'right',
+
                             template: function(row) 
                             {
                                 return '\
-                                    <button data-edit-ID="' + row.ID + '" data-name="' + row.name + '" class="btn btn-clean icon-md" title="Editar">\
+                                    <button data-edit-ID="' + row.ID + '" data-result-val="' + row.ID + '" class="btn btn-clean icon-md" title="Editar">\
                                         <i class="fas fa-edit icon-md"></i>\
                                     </button>\
-                                    \<button data-del-ID="' + row.categorieID + '" data-result-val="'+ row.categorieID +'" class="btn btn-clean icon-md" title="Eliminar">\
+                                    \<button data-del-ID="' + row.ID + '" data-result-val="'+ row.ID +'" class="btn btn-clean icon-md" title="Eliminar">\
                                         <i class="fas fa-trash-alt icon-md"></i>\
                                     </button>'
                             }
@@ -153,15 +153,16 @@
 
                 datatable.on('click', '[data-edit-ID]', function() // EDIT  
                 {
-                    let ID = $(this).data('edit-ID');
-                    let name = $(this).data('data-name');
+                    
+                    let ID = $(this).data('result-val');
+                    let name = '';
 
                     let post = {
                         ID : ID,
                         name : name
                     }
 
-                    console.log(post);
+                    console.log(ID);
 
                     /*$.ajax({
                         type: "post",
@@ -184,7 +185,9 @@
                 {
                     let post = $(this).data('result-val'); 
 
-                    $.ajax(
+                    console.log(post);
+
+                    /*$.ajax(
                     {
                         type: "post",
                         url: "<?php echo base_url('Article/delCategorie');?>",
@@ -219,7 +222,7 @@
                     }).fail( function(response)
                     {
                         swal.fire({ title: "Ha ocurrido un error inténtelo nuevamente si el problema persiste espere unos minutos", icon: "error", buttonsStyling: false, confirmButtonText: "Cerrar", customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-                    });
+                    });*/
                 });  
             };
             return {
