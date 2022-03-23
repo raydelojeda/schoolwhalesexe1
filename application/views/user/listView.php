@@ -41,9 +41,29 @@
     </div>
 </body>
 </html>
-
+<!-- INCLUDE JS -->
 <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#0BB783", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#D7F9EF", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
-<script src="<?php 	echo base_url('assets/js/plugins.bundle.js');?>"></script>
+<script src="<?php echo base_url('assets/js/spin.min.js');?>"></script>
+<script>
+	var opts = {
+		lines: 15, // The number of lines to draw
+		length: 5, // The length of each line
+		width: 0.5, // The line thickness
+		radius: 15, // The radius of the inner circle
+		corners: 0.5, // Corner roundness (0..1)
+		rotate: 0, // The rotation offset
+		direction: 1, // 1: clockwise, -1: counterclockwise
+		color: '#900c3f', // #rgb or #rrggbb or array of colors
+		speed: 0.5, // Rounds per second
+		trail: 91, // Afterglow percentage
+		shadow: false, // Whether to render a shadow
+		hwaccel: false, // Whether to use hardware acceleration
+		className: 'spin', // The CSS class to assign to the spinner
+		zIndex: 2e9, // The z-index (defaults to 2000000000)
+		top: '50%', // Top position relative to parent
+		left: '50%' // Left position relative to parent
+	};
+</script>
 <script src="<?php echo base_url('assets/js/scripts.bundle.js');?>"></script>
 <?php $this->load->view('user/customFunction');?>
 
@@ -78,7 +98,7 @@
 								},
 
 						sortable: false,
-						pagination: false,
+						pagination: true,
 
 						search:
 								{
