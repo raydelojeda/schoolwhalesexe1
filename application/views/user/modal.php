@@ -56,7 +56,7 @@
             {
                 let validEmail = myValidEmail($('#email').val());
 
-                if(validEmail == 'valid')
+                if(validEmail === 'valid')
                 {
                     let post = {
                         name: $('#name').val(),
@@ -66,20 +66,23 @@
                  
                     $.ajax({
                     type: "post",
-                    url: "<?php echo base_url('Welcome/Add');?>",
+                    url: "<?php echo base_url('CUser/create');?>",
                     data: {post},
                     dataType: "html",
                    
                     }).done( function(response)
                     {
-                        if(response == 'success')
-                            swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                        if(response === 'SENT')
+						{
+							//swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary closeModal"}});
+							$('.closeModal').click();
+						}
                         else
-                        swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                        	swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary closeModal"}});
 
                     }).fail( function(response)
                     {
-                        swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                        swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary closeModal"}});
                     });
                 }
                 else
@@ -87,7 +90,7 @@
             }
         });
 
-        $('.closeModal').on('click', function () 
+        $('.closeModal').on('click', function ()
         {
             $('#modal').modal('hide');
             $('.modal-backdrop').remove(); /* REMOVE SHOW MODAL */

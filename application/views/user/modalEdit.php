@@ -59,7 +59,7 @@
             {
                 let validEmail = myValidEmail($('#emailEdit').val());
 
-                if(validEmail == 'valid')
+                if(validEmail === 'valid')
                 {
                     let post = {
                         ID : $('#idEdit').val(),
@@ -70,13 +70,13 @@
 
                     $.ajax({
                         type: "post",
-                        url: "<?php echo base_url('Welcome/Edit');?>",
+                        url: "<?php echo base_url('CUser/update');?>",
                         data: {post},
                         dataType: "html",
                     
                     }).done( function(response)
                     {
-                        if(response == 'success')
+                        if(response === 'success')
                             swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
                         else
                         swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});

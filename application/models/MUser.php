@@ -1,32 +1,29 @@
 <?php
-Class Model extends CI_Model
+Class MUser extends CI_Model
 {
     function __construct() {
         parent::__construct();
-
-        $this->load->database();
       }
 
-    public function get()
+    public function read()
     {
-        $query = $this->db->get('data');
-
+        $query = $this->db->get('user');
         return $query->result();
     }
 
-    public function insert($params)
+    public function create($params)
     {
         $insert = array();
         $insert['name'] = $params['name'];
         $insert['lastName'] = $params['lastName'];
         $insert['email'] = $params['email'];
        
-        $result = $this->db->insert('data', $insert);
+        $result = $this->db->insert('user', $insert);
         
         return $result;
     }
 
-    public function edit($params)
+    public function update($params)
     {
         $update = array();
         $update['name'] = $params['name'];
@@ -34,17 +31,17 @@ Class Model extends CI_Model
         $update['email'] = $params['email'];
         
         $this->db->where('ID', $params['ID']);
-        $result = $this->db->update('data', $update);
+        $result = $this->db->update('user', $update);
 
         return $result;
     }
 
-    public function del($ID)
+    public function delete($ID)
     {
         $params = array();
         $params['ID'] = $ID;
 
-        $result = $this->db->delete('data', $params);
+        $result = $this->db->delete('user', $params);
 
         return $result;
     }
