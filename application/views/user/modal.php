@@ -12,18 +12,18 @@
             <div class="modal-body mb-10" style="height: 80%;">
                 <div class="container"> 
                     <div class="row">
-                        <div class="col-12 col-lg-6">
+                        <div class="col-12 col-lg-6 mt-12">
                             <label for=""><strong>Name:</strong>
                                 <input type="text" class="form-control require clear" id="name" />
                             </label>
                         </div>
-                        <div class="col-6 col-lg-6">
+                        <div class="col-12 col-lg-6 mt-12">
                             <label for=""><strong>Last Name:</strong>
                                 <input type="text" class="form-control require clear" id="lastName" />
                             </label>
                         </div>
                     </div>
-                    <div class="row mt-15">
+                    <div class="row mt-12">
                         <div class="col-12">
                         <label for=""><strong>Email:</strong>
                                 <input type="text" class="form-control require email clear" id="email" />
