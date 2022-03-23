@@ -18,10 +18,8 @@ class SendEmail
         $config['smtp_port']    = '465';
         $config['smtp_timeout'] = '7';
         $config['priority'] = '1';
-        $config['smtp_user']    = 'info@351face.com';
-        $config['smtp_pass']    = 'bezrpqyropenuzjs';
 		$config['smtp_user']    = 'do.not.reply.the.msg@gmail.com';
-		$config['smtp_pass']    = 'zeyeoqtvjcofdael';
+		$config['smtp_pass']    = 'auprbbryeqnjotjy';
         $config['charset']    = 'utf-8';
         $config['newline']    = "\r\n";
         $config['mailtype'] = 'html';
