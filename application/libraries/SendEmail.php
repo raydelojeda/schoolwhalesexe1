@@ -59,7 +59,7 @@ class SendEmail
 
         if($my_instance->email->send())
         {
-            return 'SENT';}
+            return 'success';}
         else
             print $my_instance->email->print_debugger();
 

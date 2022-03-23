@@ -141,36 +141,58 @@
 				let email = $(this).data('email-val');
 
 				/* SET VALUES */
-				$('#idEdit').val(ID);
-				$('#nameEdit').val(name);
-				$('#lastNameEdit').val(lastName);
-				$('#emailEdit').val(email);
+				$('#id').val(ID);
+				$('#name').val(name);
+				$('#lastName').val(lastName);
+				$('#email').val(email);
 
-				$('#modalEdit').modal('show'); /* SHOW MODAL EDIT */
+				$('#modal').modal('show'); /* SHOW MODAL EDIT */
 			});
 
 			datatable.on('click', '[data-del-ID]', function () // DEL
 			{
 				let post = $(this).data('result-val');
 
-				$.ajax({
+				Swal.fire(
+				{
+					text: "Confirm the action",
+					icon: "warning",
+					buttonsStyling: false,
+					confirmButtonText: "yes, delete",
+					showCancelButton: true,
+					cancelButtonText: "no, cancel",
+					customClass: {confirmButton: "btn btn-primary deleteAction", cancelButton: "btn btn-secondary"}
+				});
+
+				$('.deleteAction').on('click', function () 
+				{
+					
+					console.log(post);
+
+					$.ajax({
 					type: "post",
 					url: "<?php echo base_url('CUser/delete')?>",
 					data: {post},
 					dataType: "html",
-				}).done(function (response) {
-					if (response == 'success') {
-						swal.fire({
-							text: "Success",
-							icon: "success",
-							buttonsStyling: false,
-							confirmButtonText: "Close",
-							customClass: {confirmButton: "btn font-weight-bold btn-light-primary confirmButton"}
-						});
+					}).done(function (response) {
+						if (response == 'success') 
+						{
+							Swal.fire({position: "top-right",icon: "success", title: "success",showConfirmButton: false,timer: 2500});	
+                            setTimeout(function()
+                            {
+                                window.location.reload();
+                            }, 3000);	
+							
+						} else
+							swal.fire({
+								text: "An error has occurred",
+								icon: "error",
+								buttonsStyling: false,
+								confirmButtonText: "Close",
+								customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}
+							});
 
-						window.location.reload();
-
-					} else
+					}).fail(function (response) {
 						swal.fire({
 							text: "An error has occurred",
 							icon: "error",
@@ -178,14 +200,6 @@
 							confirmButtonText: "Close",
 							customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}
 						});
-
-				}).fail(function (response) {
-					swal.fire({
-						text: "An error has occurred",
-						icon: "error",
-						buttonsStyling: false,
-						confirmButtonText: "Close",
-						customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}
 					});
 				});
 			});

@@ -41,6 +41,8 @@
     </div>
 </div>
 
+<input class="clear" type="text" id="id" hidden />
+
 <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#0BB783", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#D7F9EF", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
 <script src="<?php 	echo base_url('assets/js/plugins.bundle.js');?>"></script>
 <script src="<?php echo base_url('assets/js/scripts.bundle.js');?>"></script>
@@ -58,30 +60,47 @@
 
                 if(validEmail === 'valid')
                 {
+                    var target = document.getElementById('modal-content'); 
+                    var spinner = new Spinner(opts).spin(target);
+
                     let post = {
+                        ID : $('#id').val(),
                         name: $('#name').val(),
                         lastName: $('#lastName').val(),
                         email: $('#email').val() 
                     }
-                 
+
+                    if($('#id').val() == '')
+                        functionName = 'create';
+                    else
+                        functionName = 'update';
+
                     $.ajax({
                     type: "post",
-                    url: "<?php echo base_url('CUser/create');?>",
+                    url: "<?php echo base_url('CUser/');?>"+functionName,
                     data: {post},
                     dataType: "html",
                    
                     }).done( function(response)
                     {
-                        if(response === 'SENT')
+                        if(response === 'success')
 						{
-							//swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary closeModal"}});
-							$('.closeModal').click();
+                            Swal.fire({position: "top-right",icon: "success", title: "success",showConfirmButton: false,timer: 2500});	
+                            setTimeout(function()
+                            {
+                                spinner.stop();
+                                $('.closeModal').click();
+                            }, 3000);						
 						}
                         else
+                        {
+                            spinner.stop();
                         	swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary closeModal"}});
+                        }
 
                     }).fail( function(response)
                     {
+                        spinner.stop();
                         swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary closeModal"}});
                     });
                 }
