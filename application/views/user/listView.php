@@ -1,7 +1,6 @@
 <?php $this->load->view('template/header');?>
 <body>
     <?php $this->load->view('user/modal');?>
-    <?php $this->load->view('user/modalEdit');?>
     <div class="container mt-10">
         <div class="card card-custom">
             <div class="card-header">
