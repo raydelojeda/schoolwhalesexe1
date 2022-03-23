@@ -14,19 +14,19 @@
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <label for=""><strong>Name:</strong>
-                                <input type="text" class="form-control require" id="name" />
+                                <input type="text" class="form-control require clear" id="name" />
                             </label>
                         </div>
                         <div class="col-6 col-lg-6">
                             <label for=""><strong>Last Name:</strong>
-                                <input type="text" class="form-control require" id="lastName" />
+                                <input type="text" class="form-control require clear" id="lastName" />
                             </label>
                         </div>
                     </div>
                     <div class="row mt-15">
                         <div class="col-12">
                         <label for=""><strong>Email:</strong>
-                                <input type="text" class="form-control require" id="email" />
+                                <input type="text" class="form-control require email clear" id="email" />
                             </label>
                         </div>
                     </div>
@@ -50,33 +50,40 @@
     {
         $('#btn-submit').on('click', function () 
         {
-            let validateForm = requireValues();
+            let validateForm = requireValues('require');
+
             if(validateForm === 'success')
             {
+                let validEmail = myValidEmail($('#email').val());
 
-                let post = {
-                    name: $('#name').val(),
-                    lastName: $('#lastName').val(),
-                    email: $('#email').val()
-                }
-
-                $.ajax({
+                if(validEmail == 'valid')
+                {
+                    let post = {
+                        name: $('#name').val(),
+                        lastName: $('#lastName').val(),
+                        email: $('#email').val() 
+                    }
+                 
+                    $.ajax({
                     type: "post",
                     url: "<?php echo base_url('Welcome/Add');?>",
                     data: {post},
                     dataType: "html",
                    
-                }).done( function(response)
-                {
-                    if(response == 'success')
-                        swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-                    else
-                    swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                    }).done( function(response)
+                    {
+                        if(response == 'success')
+                            swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                        else
+                        swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
 
-                }).fail( function(response)
-                {
-                    swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-                });
+                    }).fail( function(response)
+                    {
+                        swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                    });
+                }
+                else
+                    $('.email').addClass('is-invalid');
             }
         });
 
@@ -88,27 +95,6 @@
 
             window.location.reload();
         });
-
-        function requireValues() /* VALIDATE REQUIRED VALUES BEFORE SUBMIT */
-        {
-            let emptyRequireValue = 'success';
-
-            $('.require').each( function()
-            {
-                if(!$(this).val())
-                {
-                    $(this).addClass('is-invalid');
-                    emptyRequireValue = 'fail';
-                }
-                else
-                {
-                    $(this).removeClass('is-invalid');
-                }
-            });
-
-            return emptyRequireValue;
-        }
-        
     });
     
 </script>

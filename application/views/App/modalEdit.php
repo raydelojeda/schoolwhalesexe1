@@ -26,7 +26,7 @@
                     <div class="row mt-15">
                         <div class="col-12">
                         <label for=""><strong>Email:</strong>
-                                <input type="text" class="form-control requireEdit" id="emailEdit" />
+                                <input type="text" class="form-control requireEdit emailEdit" id="emailEdit" />
                             </label>
                         </div>
                     </div>
@@ -53,37 +53,41 @@
         $('#btn-submitEdit').on('click', function () 
         {
             console.log("click");
-            let validateForm = requireEditValues();
+            let validateForm = requireValues('requireEdit');
 
-            console.log(validateForm);
             if(validateForm === 'success')
             {
-                let post = {
-                    ID : $('#idEdit').val(),
-                    name: $('#nameEdit').val(),
-                    lastName: $('#lastNameEdit').val(),
-                    email: $('#emailEdit').val()
+                let validEmail = myValidEmail($('#emailEdit').val());
+
+                if(validEmail == 'valid')
+                {
+                    let post = {
+                        ID : $('#idEdit').val(),
+                        name: $('#nameEdit').val(),
+                        lastName: $('#lastNameEdit').val(),
+                        email: $('#emailEdit').val()
+                    }
+
+                    $.ajax({
+                        type: "post",
+                        url: "<?php echo base_url('Welcome/Edit');?>",
+                        data: {post},
+                        dataType: "html",
+                    
+                    }).done( function(response)
+                    {
+                        if(response == 'success')
+                            swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                        else
+                        swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+
+                    }).fail( function(response)
+                    {
+                        swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                    });
                 }
-
-                console.log(post);
-
-                $.ajax({
-                    type: "post",
-                    url: "<?php echo base_url('Welcome/Edit');?>",
-                    data: {post},
-                    dataType: "html",
-                   
-                }).done( function(response)
-                {
-                    if(response == 'success')
-                        swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-                    else
-                    swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-
-                }).fail( function(response)
-                {
-                    swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-                });
+                else
+                    $('.emailEdit').addClass('is-invalid');
             }
         });
 
@@ -95,27 +99,6 @@
 
             window.location.reload();
         });
-
-        function requireEditValues() /* VALIDATE requireEditD VALUES BEFORE SUBMIT */
-        {
-            let emptyrequireEditValue = 'success';
-
-            $('.requireEdit').each( function()
-            {
-                if(!$(this).val())
-                {
-                    $(this).addClass('is-invalid');
-                    emptyrequireEditValue = 'fail';
-                }
-                else
-                {
-                    $(this).removeClass('is-invalid');
-                }
-            });
-
-            return emptyrequireEditValue;
-        }
-        
     });
     
 </script>
