@@ -17,6 +17,7 @@
 </head>
 <body>
     <?php include('modal.php');?>
+    <?php include('modalEdit.php');?>
     <div class="container mt-10">
         <div class="card card-custom">
             <div class="card-header">
@@ -140,12 +141,12 @@
                             template: function(row) 
                             {
                                 return '\
-                                    <button data-edit-ID="' + row.ID + '" data-result-val="' + row.ID + '" class="btn btn-clean icon-md" title="Editar">\
+                                    <button data-edit-ID="' + row.ID + '" data-result-val="' + row.ID + '" data-name-val="' + row.name + '" data-last-val="' + row.lastName + '" data-email-val="' + row.email + '" class="btn btn-clean icon-md" title="Editar">\
                                         <i class="fas fa-edit icon-md"></i>\
                                     </button>\
                                     \<button data-del-ID="' + row.ID + '" data-result-val="'+ row.ID +'" class="btn btn-clean icon-md" title="Eliminar">\
                                         <i class="fas fa-trash-alt icon-md"></i>\
-                                    </button>'
+                                    </button>'  
                             }
                         },
                     ],
@@ -155,74 +156,53 @@
                 {
                     
                     let ID = $(this).data('result-val');
-                    let name = '';
+                    let name = $(this).data('name-val');
+                    let lastName = $(this).data('last-val');
+                    let email = $(this).data('email-val');
+                    
 
                     let post = {
                         ID : ID,
-                        name : name
+                        name : name,
+                        lastName : lastName,
+                        email : email
                     }
 
-                    console.log(ID);
+                    /* SET VALUES */
+                    $('#idEdit').val(ID);
+                    $('#nameEdit').val(name);
+                    $('#lastNameEdit').val(lastName);
+                    $('#emailEdit').val(email);
 
-                    /*$.ajax({
-                        type: "post",
-                        url: "<?php echo base_url('Article/callEditCategorie');?>",
-                        data: {post},
-                        dataType: "html",
-                    
-                    }).done( function(response)
-                    {
-                        $('#main-container').html(response);
-
-                    }).fail( function(response)
-                    {
-                        swal.fire({ title: "Ha ocurrido un error inténtelo nuevamente si el problema persiste espere unos minutos", icon: "error", buttonsStyling: false, confirmButtonText: "Cerrar", customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-                    });*/
-
+                    $('#modalEdit').modal('show'); /* SHOW MODAL EDIT */
                 });
 
                 datatable.on('click', '[data-del-ID]', function() // DEL CATEGORIE 
                 {
                     let post = $(this).data('result-val'); 
 
-                    console.log(post);
-
-                    /*$.ajax(
-                    {
+                    $.ajax({
                         type: "post",
-                        url: "<?php echo base_url('Article/delCategorie');?>",
+                        url: "<?php echo base_url('Welcome/Del')?>",
                         data: {post},
                         dataType: "html",
-                        
                     }).done( function(response)
                     {
                         if(response == 'success')
                         {
-                            swal.fire({position: "top-right",icon: "success",title: "Categoría eliminada",showConfirmButton: false,timer: 1500});
-
-                            $.ajax( // RELOAD DATA TABLE
+                            swal.fire({text: "Success",icon: "success", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary confirmButton"}});
+                            $('.confirmButton').on('click', function () 
                             {
-                                type: "post",
-                                url: "<?php echo base_url('Article/dtCategorie');?>",
-                                dataType: "html",
-                            
-                            }).done( function(response)
-                            {
-                                $("#dataTable").html(response);
-
-                            }).fail( function(response)
-                            {
-                                swal.fire({ title: "Ha ocurrido un error inténtelo nuevamente si el problema persiste espere unos minutos", icon: "error", buttonsStyling: false, confirmButtonText: "Cerrar", customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                                window.location.reload();
                             });
                         }
                         else
-                        {
-                            swal.fire({ title: "No se puede eliminar una categoría que esté relacionada con 1 o más artículos", icon: "error", buttonsStyling: false, confirmButtonText: "Cerrar", customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-                        }
+                            swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+
                     }).fail( function(response)
                     {
-                        swal.fire({ title: "Ha ocurrido un error inténtelo nuevamente si el problema persiste espere unos minutos", icon: "error", buttonsStyling: false, confirmButtonText: "Cerrar", customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
-                    });*/
+                        swal.fire({text: "An error has occurred",icon: "error", buttonsStyling: false, confirmButtonText: "Close",customClass: {confirmButton: "btn font-weight-bold btn-light-primary"}});
+                    });
                 });  
             };
             return {

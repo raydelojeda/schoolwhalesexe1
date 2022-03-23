@@ -1,9 +1,9 @@
-<div class="modal fade" id="modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true" >
+<div class="modal fade" id="modalEdit" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true" >
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content" id="modal-content">
             <div class="modal-header">
                 <!-- MODAL TITLE -->
-                <h5 class="modal-title">Form</h5>
+                <h5 class="modal-title">Form Edit</h5>
                 <!-- MODAL BTN CLOSE MODAL -->
                 <button type="button" class="btn btn-clean text-dark closeModal">
                     <i aria-hidden="true" class="ki ki-close"></i>
@@ -14,19 +14,19 @@
                     <div class="row">
                         <div class="col-12 col-lg-6">
                             <label for=""><strong>Name:</strong>
-                                <input type="text" class="form-control require" id="name" />
+                                <input type="text" class="form-control requireEdit" id="nameEdit" />
                             </label>
                         </div>
                         <div class="col-6 col-lg-6">
                             <label for=""><strong>Last Name:</strong>
-                                <input type="text" class="form-control require" id="lastName" />
+                                <input type="text" class="form-control requireEdit" id="lastNameEdit" />
                             </label>
                         </div>
                     </div>
                     <div class="row mt-15">
                         <div class="col-12">
                         <label for=""><strong>Email:</strong>
-                                <input type="text" class="form-control require" id="email" />
+                                <input type="text" class="form-control requireEdit" id="emailEdit" />
                             </label>
                         </div>
                     </div>
@@ -34,12 +34,14 @@
             </div>
             <!-- MODAL FOOTER -->
             <div class="modal-footer mt-10">
-                <button id="btn-submit" type="button" class="btn btn-sm btn-primary">Submit</button>
+                <button id="btn-submitEdit" type="button" class="btn btn-sm btn-primary">Submit</button>
                 <button type="button" class="btn btn-sm btn-secondary closeModal">Close</button>            
             </div>
         </div>
     </div>
 </div>
+
+<input type="text" id="idEdit" hidden />
 
 <script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#0BB783", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#8950FC", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#D7F9EF", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#EEE5FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
 <script src="<?php 	echo base_url('assets/js/plugins.bundle.js');?>"></script>
@@ -48,21 +50,26 @@
 <script>
     $(document).ready(function () 
     {
-        $('#btn-submit').on('click', function () 
+        $('#btn-submitEdit').on('click', function () 
         {
-            let validateForm = requireValues();
+            console.log("click");
+            let validateForm = requireEditValues();
+
+            console.log(validateForm);
             if(validateForm === 'success')
             {
-
                 let post = {
-                    name: $('#name').val(),
-                    lastName: $('#lastName').val(),
-                    email: $('#email').val()
+                    ID : $('#idEdit').val(),
+                    name: $('#nameEdit').val(),
+                    lastName: $('#lastNameEdit').val(),
+                    email: $('#emailEdit').val()
                 }
+
+                console.log(post);
 
                 $.ajax({
                     type: "post",
-                    url: "<?php echo base_url('Welcome/Add');?>",
+                    url: "<?php echo base_url('Welcome/Edit');?>",
                     data: {post},
                     dataType: "html",
                    
@@ -89,16 +96,16 @@
             window.location.reload();
         });
 
-        function requireValues() /* VALIDATE REQUIRED VALUES BEFORE SUBMIT */
+        function requireEditValues() /* VALIDATE requireEditD VALUES BEFORE SUBMIT */
         {
-            let emptyRequireValue = 'success';
+            let emptyrequireEditValue = 'success';
 
-            $('.require').each( function()
+            $('.requireEdit').each( function()
             {
                 if(!$(this).val())
                 {
                     $(this).addClass('is-invalid');
-                    emptyRequireValue = 'fail';
+                    emptyrequireEditValue = 'fail';
                 }
                 else
                 {
@@ -106,7 +113,7 @@
                 }
             });
 
-            return emptyRequireValue;
+            return emptyrequireEditValue;
         }
         
     });

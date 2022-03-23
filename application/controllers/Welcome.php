@@ -59,4 +59,24 @@ class Welcome extends CI_Controller {
 		else
 			echo 'fail';
 	}
+
+	public function Edit()
+	{
+		$result = $this->Model->edit($this->input->post('post'));
+
+		if($result == true)
+			echo 'success';
+		else
+			echo 'fail';
+	}
+
+	public function Del()
+	{
+		$result = $this->Model->del($this->input->post('post'));
+
+		if($result == true)
+			echo 'success';
+		else
+			echo 'fail';
+	}
 }

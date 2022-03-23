@@ -26,5 +26,28 @@ Class Model extends CI_Model
         return $result;
     }
 
+    public function edit($params)
+    {
+        $update = array();
+        $update['name'] = $params['name'];
+        $update['lastName'] = $params['lastName'];
+        $update['email'] = $params['email'];
+        
+        $this->db->where('ID', $params['ID']);
+        $result = $this->db->update('data', $update);
+
+        return $result;
+    }
+
+    public function del($ID)
+    {
+        $params = array();
+        $params['ID'] = $ID;
+
+        $result = $this->db->delete('data', $params);
+
+        return $result;
+    }
+
 }
 ?>
